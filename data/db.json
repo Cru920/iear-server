@@ -1,0 +1,166 @@
+{
+  "aulas": [
+    {
+      "id": 1,
+      "codigo": "01",
+      "nombre": "Laboratorio",
+      "ubicacion": "Laboratorio",
+      "capacidad": 20,
+      "ocupantes": 18,
+      "jornada": "Mañana",
+      "docente": "María López",
+      "grupo": "10A",
+      "asignatura": "Química",
+      "horario": "7:00-8:00",
+      "estado": "Ocupado",
+      "observaciones": "",
+      "imagen": ""
+    },
+    {
+      "id": 2,
+      "codigo": "02",
+      "nombre": "Aula 02",
+      "ubicacion": "Segundo Piso",
+      "capacidad": 23,
+      "ocupantes": 20,
+      "jornada": "Mañana",
+      "docente": "Carlos Pérez",
+      "grupo": "9B",
+      "asignatura": "Física",
+      "horario": "8:00-9:00",
+      "estado": "Ocupado",
+      "observaciones": "",
+      "imagen": ""
+    },
+    {
+      "id": 3,
+      "codigo": "03",
+      "nombre": "Aula 03",
+      "ubicacion": "Segundo Piso",
+      "capacidad": 24,
+      "ocupantes": 24,
+      "jornada": "Mañana",
+      "docente": "Ana Ruiz",
+      "grupo": "11A",
+      "asignatura": "Español",
+      "horario": "9:00-11:00",
+      "estado": "Ocupado",
+      "observaciones": "",
+      "imagen": ""
+    },
+    {
+      "id": 4,
+      "codigo": "04",
+      "nombre": "Aula 04",
+      "ubicacion": "Primer Piso - Entrada",
+      "capacidad": 30,
+      "ocupantes": 0,
+      "jornada": "Tarde",
+      "docente": "Jorge Díaz",
+      "grupo": "8A",
+      "asignatura": "Inglés",
+      "horario": "7:00-8:00",
+      "estado": "Disponible",
+      "observaciones": "",
+      "imagen": ""
+    },
+    {
+      "id": 5,
+      "codigo": "05",
+      "nombre": "Aula 05",
+      "ubicacion": "Primer Piso - Salida",
+      "capacidad": 21,
+      "ocupantes": 0,
+      "jornada": "Tarde",
+      "docente": "Laura Gómez",
+      "grupo": "7C",
+      "asignatura": "Matemáticas",
+      "horario": "10:00-14:00",
+      "estado": "Reservado",
+      "observaciones": "",
+      "imagen": ""
+    },
+    {
+      "id": 6,
+      "codigo": "06",
+      "nombre": "Polideportivo",
+      "ubicacion": "Polideportivo",
+      "capacidad": 50,
+      "ocupantes": 0,
+      "jornada": "Completa",
+      "docente": "Pedro Sánchez",
+      "grupo": "10B",
+      "asignatura": "Educación Física",
+      "horario": "8:00-10:00",
+      "estado": "Disponible",
+      "observaciones": "",
+      "imagen": ""
+    },
+    {
+      "id": 7,
+      "codigo": "07",
+      "nombre": "Aula 07",
+      "ubicacion": "Tercer Piso",
+      "capacidad": 28,
+      "ocupantes": 0,
+      "jornada": "Completa",
+      "docente": "Sin asignar",
+      "grupo": "-",
+      "asignatura": "-",
+      "horario": "-",
+      "estado": "Mantenimiento",
+      "observaciones": "Pintura en proceso",
+      "imagen": ""
+    }
+  ],
+  "reservas": [
+    {
+      "id": 1791675135670,
+      "aulaId": 1,
+      "fecha": "2026-10-10",
+      "horaInicio": "08:00",
+      "horaFin": "09:00",
+      "actividad": "Práctica",
+      "docente": "Howard"
+    }
+  ],
+  "usuarios": [
+    {
+      "id": 1,
+      "nombre": "Camilo Cruz",
+      "usuario": "coordinador",
+      "password": "$2a$10$NsWWpvd3XMp4XWbsvkFP8.m2LghRDkpnWP.IRKggvk/ZNEvxWqm3K",
+      "rol": "coordinador",
+      "pregunta": "",
+      "respuesta": "",
+      "favoritos": []
+    },
+    {
+      "id": 2,
+      "nombre": "Estudiante Demo",
+      "usuario": "estudiante",
+      "password": "$2a$10$qmnqieK6BNymuz4Z9IQ3KeRf2F7S6yLzsaV6ureTmxIrbJtY0c8Gm",
+      "rol": "estudiante",
+      "pregunta": "¿Cuál es tu color favorito?",
+      "respuesta": "$2a$10$ZCnOkSjTNRIML5LHqAAfFOUfNh0VBUt4OLXJDhfQSwyYWSjcg0n1G",
+      "favoritos": [
+        6
+      ]
+    }
+  ],
+  "config": {
+    "institucion": "Institución Educativa Antonio Ricaurte",
+    "proyecto": "I.E.A.R",
+    "notif": true
+  },
+  "historial": [
+    {
+      "fecha": "2026-10-10T23:32:15.670Z",
+      "accion": "Reserva creada por Camilo Cruz."
+    },
+    {
+      "fecha": "2026-10-10T23:30:37.951Z",
+      "accion": "Sistema inicializado con datos de demostración."
+    }
+  ]
+}
