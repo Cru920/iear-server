@@ -84,7 +84,19 @@ cron job) para no perder información. Si más adelante quieres una base de dato
 (PostgreSQL, MySQL, MongoDB), la estructura del proyecto ya está organizada por capas
 (`db.js` concentra toda la lectura/escritura de datos) para que sea sencillo reemplazarla.
 
-## 5. Estructura del proyecto
+## 5. Activar el envío real de correos (botón "Enviar por correo")
+
+Por defecto, si no configuras esto, el botón mostrará un error pidiendo configuración. Para activarlo:
+
+1. **Activa la verificación en dos pasos** en la cuenta de Gmail que quieras usar como remitente: ve a [myaccount.google.com/security](https://myaccount.google.com/security) → "Verificación en dos pasos" → actívala si no lo está.
+2. Con eso activado, entra a [myaccount.google.com/apppasswords](https://myaccount.google.com/apppasswords), ponle un nombre (ej. "IEAR") y genera una **contraseña de aplicación** — son 16 caracteres, sin espacios al copiarla.
+3. Agrega estas dos variables de entorno donde tengas desplegado el servidor:
+   - `GMAIL_USER` → tu correo completo de Gmail (ej. `reportes.iear@gmail.com`)
+   - `GMAIL_APP_PASSWORD` → la contraseña de 16 caracteres que generaste (no tu contraseña normal de Gmail)
+4. En **Render**: ve a tu servicio → "Environment" → "Add Environment Variable", agrega las dos, y guarda (Render reinicia el servicio solo). En **local**: expórtalas antes de `npm start`, o usa un archivo `.env` con un paquete como `dotenv` si prefieres.
+5. Listo — ahora el botón "✉️ Enviar por correo" pide el destinatario y lo manda de verdad, sin abrir ningún programa de correo. Gmail permite hasta 500 correos gratis al día con este método.
+
+## 6. Estructura del proyecto
 
 ```
 iear-server/
@@ -98,7 +110,7 @@ iear-server/
     └── index.html      # Frontend (interfaz) que consume la API
 ```
 
-## 6. Seguridad — antes de usarlo con datos reales
+## 7. Seguridad — antes de usarlo con datos reales
 
 - Cambia `JWT_SECRET` por una clave propia.
 - Considera limitar quién puede registrarse como "coordinador" (ahora mismo cualquiera que

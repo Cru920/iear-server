@@ -783,10 +783,27 @@ document.getElementById('btnPDF').onclick=()=>{
   toast('Reporte PDF descargado.');
 };
 document.getElementById('btnMail').onclick=()=>{
-  const subject=encodeURIComponent('Reporte de Ocupación — '+state.config.institucion);
-  const body=encodeURIComponent(buildReportSummary());
-  window.location.href=`mailto:?subject=${subject}&body=${body}`;
-  toast('Abriendo tu cliente de correo con el reporte…');
+  openModal(`<h3>Enviar reporte por correo</h3>
+  <div class="form-grid">
+    <div class="full"><label>Correo de destino *</label><input id="mailDest" type="email" placeholder="ejemplo@correo.com"></div>
+  </div>
+  <div class="err" id="mailErr" style="display:none"></div>
+  <div class="modal-actions"><button class="btn" onclick="closeModal()">Cancelar</button><button class="btn primary" id="mailSendBtn">Enviar</button></div>`);
+  document.getElementById('mailSendBtn').onclick=async ()=>{
+    const dest=document.getElementById('mailDest').value.trim();
+    const err=document.getElementById('mailErr');
+    const btn=document.getElementById('mailSendBtn');
+    if(!dest){ err.textContent='Escribe un correo de destino.'; err.style.display='block'; return; }
+    err.style.display='none'; btn.disabled=true; btn.textContent='Enviando…';
+    try{
+      await api('/reportes/enviar',{method:'POST',body:JSON.stringify({
+        destinatario:dest,
+        asunto:'Reporte de Ocupación — '+state.config.institucion,
+        cuerpo:buildReportSummary()
+      })});
+      toast('Correo enviado correctamente a '+dest+'.'); closeModal();
+    }catch(e){ err.textContent=e.message; err.style.display='block'; btn.disabled=false; btn.textContent='Enviar'; }
+  };
 };
 
 /* ---------- Configuración ---------- */

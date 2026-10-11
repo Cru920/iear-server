@@ -3,6 +3,7 @@ const cors = require('cors');
 const path = require('path');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
+const nodemailer = require('nodemailer');
 const db = require('./db');
 
 const app = express();
@@ -37,6 +38,16 @@ function logAccion(data, texto) {
 function publicUser(u) {
   return { id: u.id, nombre: u.nombre, usuario: u.usuario, rol: u.rol, tieneRecuperacion: !!(u.pregunta && u.respuesta) };
 }
+
+/* ================= CORREO (Gmail vía Nodemailer) ================= */
+let mailTransporter = null;
+if (process.env.GMAIL_USER && process.env.GMAIL_APP_PASSWORD) {
+  mailTransporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: { user: process.env.GMAIL_USER, pass: process.env.GMAIL_APP_PASSWORD }
+  });
+}
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 /* ================= AUTH ================= */
 app.post('/api/auth/register', (req, res) => {
@@ -261,6 +272,27 @@ app.put('/api/config', authRequired, coordOnly, (req, res) => {
 
 /* ================= HISTORIAL ================= */
 app.get('/api/historial', authRequired, (req, res) => res.json(db.read().historial));
+
+/* ================= ENVIAR REPORTE POR CORREO ================= */
+app.post('/api/reportes/enviar', authRequired, async (req, res) => {
+  const { destinatario, asunto, cuerpo } = req.body || {};
+  if (!mailTransporter) return res.status(500).json({ error: 'El envío de correo no está configurado en este servidor todavía.' });
+  if (!destinatario || !EMAIL_RE.test(destinatario)) return res.status(400).json({ error: 'Escribe un correo de destino válido.' });
+  try {
+    const data = db.read();
+    await mailTransporter.sendMail({
+      from: `"${data.config.proyecto || 'I.E.A.R'}" <${process.env.GMAIL_USER}>`,
+      to: destinatario,
+      subject: asunto || 'Reporte de Ocupación',
+      text: cuerpo || ''
+    });
+    logAccion(data, `Reporte enviado por correo a ${destinatario} por ${req.user.nombre}.`);
+    db.write(data);
+    res.json({ ok: true });
+  } catch (e) {
+    res.status(500).json({ error: 'No se pudo enviar el correo. Revisa la configuración de Gmail en el servidor.' });
+  }
+});
 
 /* ================= DEMO RESET ================= */
 app.post('/api/demo/restore', authRequired, coordOnly, (req, res) => {
